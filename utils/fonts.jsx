@@ -5,6 +5,7 @@ import {
     Open_Sans,
     Dancing_Script,
     Allura,
+    
   } from "next/font/google";
   export const allura = Allura({
     subsets: ["latin"],
