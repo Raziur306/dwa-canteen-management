@@ -10,10 +10,10 @@ const NavBar = () => {
       </Link>
       <NavBarMenuWrapper>
         <Link href={"/"}>Home</Link>
-        <Link href={"/My Order"}>My Order</Link>
-        <Link href={"/Cart"}>Cart</Link>
-        <Link href={"/Profile"}>Profile</Link>
-        <Link href={"/Login"}>Login</Link>
+        <Link href={"/my-order"}>My Order</Link>
+        <Link href={"/cart"}>Cart</Link>
+        <Link href={"/profile"}>Profile</Link>
+        <Link href={"/login"}>Login</Link>
       </NavBarMenuWrapper>
     </NavBarContainer>
   );
