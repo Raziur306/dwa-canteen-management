@@ -6,6 +6,7 @@ import {
   StyledRegistrationContainer,
 } from "@/styled/registration.pageStyles";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { useFormik } from "formik";
 import { object, string, ref } from "yup";
@@ -17,7 +18,31 @@ const RegistrationSection = () => {
     router.push("/login");
   };
 
-  const signUpCall = async (values) => {};
+  const registerUser = async (values) => {
+    try {
+      const registerCall = () =>
+        fetch("/api/registration", {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      await toast.promise(registerCall(), {
+        loading: <b>Registering...</b>,
+        success: (res) => {
+          if (!res.ok) {
+            throw new Error("Something went wrong");
+          }
+          router.push("/login");
+          return <b>Registration successful</b>;
+        },
+        error: (err) => <b>{err.toString()}</b>,
+      });
+    } catch (error) {
+      console.log("Registration error", error);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -39,7 +64,7 @@ const RegistrationSection = () => {
         .oneOf([ref("password")], "Passwords must match"),
     }),
     onSubmit: (values) => {
-      signUpCall(values);
+      registerUser(values);
     },
   });
 

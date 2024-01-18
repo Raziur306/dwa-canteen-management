@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/profile.page/ProfilePageSection.jsx", "pages/api/users/login/router.ts"],
   "exclude": ["node_modules"]
 }

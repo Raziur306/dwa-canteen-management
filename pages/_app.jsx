@@ -5,13 +5,13 @@ import { Toaster } from "react-hot-toast";
 function MyApp({ Component, pageProps }) {
   return (
     <Theme>
-        <Toaster
-          toastOptions={{
-            style: {
-              fontFamily: "arial",
-            },
-          }}
-        />
+      <Toaster
+        toastOptions={{
+          style: {
+            fontFamily: "arial",
+          },
+        }}
+      />
       <Component {...pageProps} />
     </Theme>
   );

@@ -8,20 +8,56 @@ import React from "react";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { object, string, email } from "yup";
+import toast from "react-hot-toast";
+import { cookies } from "../../config/cookies";
+import { useRouter } from "next/router";
 
 const LoginSection = () => {
+  const router = useRouter();
+  const setToken = async (res) => {
+    const data = await res.json();
+    cookies.set("user_token", data.token);
+    router.push("/");
+  };
+
+  const login = async (values) => {
+    try {
+      const loginCall = () =>
+        fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+      await toast.promise(loginCall(), {
+        loading: <b>Logging in..</b>,
+        success: (res) => {
+          if (!res.ok) {
+            throw new Error("Something went wrong");
+          }
+          setToken(res);
+          return <b>Login successful!</b>;
+        },
+        error: (err) => <b>{err.toString()}</b>,
+      });
+    } catch (error) {
+      console.log("Login error", error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
     validationSchema: object({
       email: string().required().email().trim(),
       password: string().required(),
     }),
     onSubmit: (values) => {
-      loginCall(values);
+      login(values);
     },
   });
 
@@ -70,16 +106,6 @@ const LoginSection = () => {
                   {formik.errors.password || ""}
                 </div>
               )}
-          </div>
-          <div className="flex flex-row gap-3 justify-between">
-            <div className="flex items-center gap-1">
-              <input
-                type="checkbox"
-                name="rememberMe"
-                onChange={formik.handleChange}
-              />
-              <label>Remember Me</label>
-            </div>
           </div>
           <StyledLoginBtn type="button" onClick={() => formik.handleSubmit()}>
             Sign In

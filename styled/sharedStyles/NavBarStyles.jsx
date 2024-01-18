@@ -23,11 +23,12 @@ export const NavBarMenuWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 15px;
-  text-transform: uppercase;
   font-family: ${(props) => props.theme.fonts.$poppins};
   font-weight: 500;
-  & a {
+  & a,
+  button {
     position: relative;
+    text-transform: uppercase;
     &:after {
       position: absolute;
       display: block;
