@@ -26,25 +26,3 @@ export const dateFormatter = (date) => {
     }
   };
   
-  export const formatChatTimestamp = (timestamp) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-  
-    if (
-      date.getDate() === now.getDate() &&
-      date.getMonth() === now.getMonth() &&
-      date.getFullYear() === now.getFullYear()
-    ) {
-      return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    }
-  
-    if (date.getFullYear() === now.getFullYear()) {
-      return date.toLocaleString("en-US", {
-        weekday: "short",
-        day: "numeric",
-        month: "short",
-      });
-    }
-  
-    return date.toLocaleString("en-US", { day: "numeric", month: "short" });
-  };
