@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import CartItemCard from "./CartItemCard";
 import {
   CartTableStyles,
@@ -6,21 +6,25 @@ import {
 } from "@/styled/cart.pageStyles/CartPageStyles";
 import { CartCheckoutBtnStyle } from "../../styled/cart.pageStyles/CartPageStyles";
 import { cookies } from "@/config/cookies";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const CartSection = () => {
   const token = cookies.get("user_token");
   const [cartData, setCartData] = useState([]);
+  const router = useRouter();
 
   const totalAmount = useMemo(() => {
     let total = 0;
     cartData.forEach((item) => {
-      total += item.FoodItem.price;
+      total += item.FoodItem.price * item.quantity;
     });
 
     return total;
   }, [cartData]);
 
   const getCartData = async () => {
+    console.log("Called");
     try {
       const res = await fetch("/api/cart-item", {
         method: "GET",
@@ -46,9 +50,40 @@ const CartSection = () => {
     getCartData();
   }, []);
 
+  const handleCheckout = async () => {
+    try {
+      const checkoutCall = () =>
+        fetch(`/api/place-order`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ subTotal: totalAmount }),
+        });
+
+      await toast.promise(checkoutCall(), {
+        loading: <b>Placing order..</b>,
+        success: (res) => {
+          if (res.status == 301) {
+            router.push("/profile");
+            throw new Error("Complete your profile!");
+          } else if (!res.ok) {
+            throw new Error("Something went wrong");
+          }
+          onChange();
+          return <b>Order placed successfully!</b>;
+        },
+        error: (err) => <b>{err.toString()}</b>,
+      });
+    } catch (error) {
+      console.log("Checkout error", error);
+    }
+  };
+
   return (
     <div className="mb-10">
-      <CartTitleTextStyle>My Shopping Cart</CartTitleTextStyle>
+      <CartTitleTextStyle>My Meal Cart</CartTitleTextStyle>
       <div className="min-h-[60vh]">
         {cartData.length > 0 && (
           <CartTableStyles className="w-4/6 m-auto">
@@ -85,11 +120,19 @@ const CartSection = () => {
               </tr>
               <tr>
                 <td
-                  colSpan={2}
+                  colSpan={1}
                   className="text-center p-4 text-xl font-medium"
                 ></td>
+                <td className="text-center p-4 text-xl font-medium">
+                  <div className="flex flex-row gap-1 items-center">
+                    <input checked className="w-1 h-4" type="radio" />
+                    <label className="text-sm">Cash On Delivery</label>
+                  </div>
+                </td>
                 <td colSpan={2} className="text-center p-5">
-                  <CartCheckoutBtnStyle>Checkout</CartCheckoutBtnStyle>
+                  <CartCheckoutBtnStyle onClick={handleCheckout}>
+                    Checkout
+                  </CartCheckoutBtnStyle>
                 </td>
               </tr>
             </tbody>

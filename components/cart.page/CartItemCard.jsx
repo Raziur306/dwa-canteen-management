@@ -53,6 +53,7 @@ const CartItemCard = ({
           if (!res.ok) {
             throw new Error("Something went wrong!");
           }
+          onChange();
           return <b>Updated!</b>;
         },
         error: (err) => <b>{err.toString()}</b>,

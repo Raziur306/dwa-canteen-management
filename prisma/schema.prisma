@@ -32,18 +32,9 @@ model FoodItem {
   price     Int
   status    String?   @default("available")
   createdAt DateTime? @default(now())
-  Order     Order?    @relation(fields: [orderId], references: [id])
   orderId   String?   @db.ObjectId
   cartId    String?   @db.ObjectId
   Cart      Cart[]
-}
-
-model Order {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  User      User?      @relation(fields: [userId], references: [id])
-  userId    String?    @db.ObjectId
-  createdAt DateTime?  @default(now())
-  items     FoodItem[]
 }
 
 model Cart {
@@ -54,4 +45,23 @@ model Cart {
   itemId    String?   @db.ObjectId
   quantity  Int?      @default(1)
   FoodItem  FoodItem? @relation(fields: [itemId], references: [id])
+}
+
+type OrderItem {
+  id       String
+  title    String
+  desc     String
+  image    String
+  price    Int
+  quantity Int
+}
+
+model Order {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  User      User?       @relation(fields: [userId], references: [id])
+  userId    String?     @db.ObjectId
+  createdAt DateTime?   @default(now())
+  subTotal  Int
+  status    String?     @default("pending")
+  items     OrderItem[]
 }

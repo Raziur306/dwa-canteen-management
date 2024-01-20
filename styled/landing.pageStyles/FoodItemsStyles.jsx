@@ -7,7 +7,7 @@ export const FoodItemsSectionContainer = styled.div`
   padding: 50px;
   & h1 {
     font-family: ${(props) => props.theme.fonts.$poppins};
-    font-size: 1.8rem;
+    font-size: 1.25rem;
     font-weight: 600;
     position: relative;
     &:after {
