@@ -6,7 +6,11 @@ const getFoodItem = async (req, res) => {
       return res.status(405).json({ message: "Something went wrong" });
     }
 
-    const items = await prisma.FoodItem.findMany({});
+    const items = await prisma.FoodItem.findMany({
+      orderBy:{
+        createdAt:"desc"
+      }
+    });
 
     return res.status(200).json(items);
   } catch (error) {

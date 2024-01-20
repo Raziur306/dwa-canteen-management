@@ -4,11 +4,17 @@ import Image from "next/image";
 import { StockOutBtn } from "@/styled/landing.pageStyles/FoodCardStyles";
 import { cookies } from "@/config/cookies";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const FoodCard = ({ id, image, title, price, desc, status }) => {
   const token = cookies.get("user_token");
+  const router = useRouter();
 
   const handleAddCart = async () => {
+    if (!token) {
+      toast.error("Please login first..");
+      return router.push("/login");
+    }
     try {
       const addCartCall = () =>
         fetch(`/api/add-cart/${id}`, {
