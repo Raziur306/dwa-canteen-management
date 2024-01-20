@@ -138,20 +138,19 @@ const ProfilePageSection = () => {
             accept="image/*"
             onChange={handleImageChange}
           />
-          <p>Your Profile Picture</p>
-          <div className="relative w-24 aspect-[1/1]">
+          <div className="relative w-28 aspect-[1/1]">
             <Image
               fill
               alt="Profile"
               src={`${formik.values?.image || "/default.jpg"}`}
-              className="rounded-full"
+              className="rounded-full border-2"
               sizes={"(max-width: 768px) 100vh, 96px"}
             />
           </div>
           <p className="text-sm underline text-[#909090]">Upload a new photo</p>
         </div>
       </div>
-      <div className="flex justify-end p-10">
+      <div className="flex justify-end p-3">
         <AccountEditPenWrapper onClick={handleEditPenClick}>
           <EditPen />
         </AccountEditPenWrapper>

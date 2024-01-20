@@ -1,6 +1,5 @@
 import { prisma } from "../../lib";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import * as jose from "jose";
 
 const login = async (req, res) => {

@@ -14,11 +14,11 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    if (cookies) {
+    if (token) {
       return setIsLoggedIn(true);
     }
     setIsLoggedIn(false);
-  }, [cookies]);
+  }, [token]);
 
   return (
     <NavBarContainer>
@@ -29,7 +29,7 @@ const NavBar = () => {
         <Link href={"/"}>Home</Link>
         <Link href={"/my-order"}>My Order</Link>
         <Link href={"/cart"}>Cart</Link>
-        {!isLoggedIn && <Link href={"/profile"}>Profile</Link>}
+        {isLoggedIn && <Link href={"/profile"}>Profile</Link>}
         {!isLoggedIn && <Link href={"/login"}>Login</Link>}
         {isLoggedIn && <button onClick={handleLogout}>Logout</button>}
       </NavBarMenuWrapper>

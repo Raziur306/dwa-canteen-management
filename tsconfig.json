@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/profile.page/ProfilePageSection.jsx", "pages/api/users/login/router.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/profile.page/ProfilePageSection.jsx", "pages/api/users/login/router.ts", "components/admin.pages/SideBar.jsx", "pages/admin/index.jsx", "components/admin.pages/index.js", "components/admin.pages/AdminTopBar.jsx", "pages/admin/users-list.jsx", "components/admin.pages/UsersListSection.jsx", "components/admin.pages/DeleteUserModal.jsx", "components/admin.pages/StatisticsCards.jsx", "styled/admin.pageStyles/DashboardStyles.jsx", "styled/admin.pageStyles/ProductListStyles.jsx", "styled/admin.pageStyles/SideBarStyles.jsx", "styled/admin.pageStyles/UsersPage.styles.jsx", "styled/admin.pageStyles/AllItemsSectionStyles.jsx", "styled/admin.pageStyles/AdminStyles.jsx", "styled/admin.pageStyles/index.js", "pages/admin/food-item.jsx", "pages/admin/user-report.jsx", "components/admin.pages/ViewItemDetailsModal.jsx", "pages/api/admin/remove-user/[userId].js", "components/admin.pages/DeleteItemModal.jsx", "components/admin.pages/UpdateItemStatusModal.jsx"],
   "exclude": ["node_modules"]
 }
