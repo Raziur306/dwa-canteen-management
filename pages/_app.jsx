@@ -1,6 +1,7 @@
 import Theme from "@/context/FontContext";
 import "../styles/globals.css";
 import { Toaster } from "react-hot-toast";
+import { CommonAPiContextProvider } from "../context";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,7 +13,9 @@ function MyApp({ Component, pageProps }) {
           },
         }}
       />
-      <Component {...pageProps} />
+      <CommonAPiContextProvider>
+        <Component {...pageProps} />
+      </CommonAPiContextProvider>
     </Theme>
   );
 }

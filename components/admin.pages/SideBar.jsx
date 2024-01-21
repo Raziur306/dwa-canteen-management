@@ -14,33 +14,16 @@ import Image from "next/image";
 import { AdminTopBar } from ".";
 import { cookies } from "@/config/cookies";
 import Group from "@/public/group";
+import { CommonApiContext } from "@/context";
 
 const SideBar = ({ children, topBarTitle }) => {
   const token = cookies.get("user_token");
   const path = usePathname();
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState();
+  const { profileInfo, fetchProfileInfo } = useContext(CommonApiContext);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const res = await fetch("/api/user-info", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUserInfo(data);
-        }
-      } catch (error) {
-        console.log("Fetching admin info error", error);
-      }
-    };
-    fetchUserInfo();
+    fetchProfileInfo();
   }, []);
 
   const handleLogoutClick = async () => {
@@ -58,9 +41,9 @@ const SideBar = ({ children, topBarTitle }) => {
               height={50}
               className="rounded-full"
               alt="Admin Profile"
-              src={userInfo?.image || "/default.jpg"}
+              src={profileInfo?.image || "/default.jpg"}
             />
-            <span>{userInfo?.name}</span>
+            <span>{profileInfo?.name}</span>
           </PersonInfoContainer>
 
           <Link href={"/admin"}>
