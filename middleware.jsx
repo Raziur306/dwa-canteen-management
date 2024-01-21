@@ -5,7 +5,7 @@ export const middleware = async (request) => {
 
   const token = request.cookies.get("user_token")?.value;
 
-  const isUserPath = "/my-order" == pathname || "/cart" == pathname;
+  const isUserPath = "/my-order" == pathname || "/cart" == pathname || "/login" == pathname;
 
   if (isUserPath) {
     if (pathname == "/login" && token) {
