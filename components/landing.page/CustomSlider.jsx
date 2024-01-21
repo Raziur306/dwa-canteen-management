@@ -92,7 +92,9 @@ const CustomSlider = ({ images }) => {
               </p>
               <Link href={"#foods"}>Order Now</Link>
             </TitleWrapper>
-            <img src={image} alt={`slide-${index}`} />
+            <div className="relative aspect-[1/1] h-full w-full">
+              <Image fill src={image} alt={`slide-${index}`} />
+            </div>
           </Slide>
         ))}
       </SliderContent>

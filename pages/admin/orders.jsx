@@ -4,6 +4,12 @@ import {
   PendingPageMenuWrapper,
 } from "@/styled/admin.pageStyles";
 import { useState } from "react";
+import {
+  AllOrdersSection,
+  PendingOrdersSection,
+  CancelledOrdersSection,
+  DeliveredOrdersSection,
+} from "@/components/admin.pages";
 
 const Orders = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -34,10 +40,17 @@ const Orders = () => {
           >
             Canceled Orders
           </li>
+          <li
+            onClick={() => handleMenuClick(3)}
+            className={`${selectedMenu == 3 ? "active" : ""}`}
+          >
+            Delivered Orders
+          </li>
         </PendingPageMenuWrapper>
-        {/* {selectedMenu == 0 && <AllBooksSection />}
-        {selectedMenu == 1 && <PendingBooksSection />}
-        {selectedMenu == 2 && <ApprovedBooks />} */}
+        {selectedMenu == 0 && <AllOrdersSection />}
+        {selectedMenu == 1 && <PendingOrdersSection />}
+        {selectedMenu == 2 && <CancelledOrdersSection />}
+        {selectedMenu == 3 && <DeliveredOrdersSection />}
       </PendingAndRequestPageContainer>
     </SideBar>
   );

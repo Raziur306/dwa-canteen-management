@@ -33,11 +33,15 @@ export const ItemsInDetailsTable = styled.table`
       text-align: center;
       display: block;
       width: 113px;
-      &.pending {
+      &.processing {
         background: #ff8c003d;
         color: #ff8c00e4;
         cursor: pointer;
         cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          transform: scale(1.1);
+        }
       }
       &.view {
         background: #2b00ff3f;
@@ -49,16 +53,16 @@ export const ItemsInDetailsTable = styled.table`
           transform: scale(1.1);
         }
       }
-      &.reject {
-        background: #ffbb0041;
-        color: #ffbb00ca;
+      &.delivered {
+        background: #068508b1;
+        color: #ffffffc8;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         &:hover {
           transform: scale(1.1);
         }
       }
-      &.delete {
+      &.cancelled {
         background: #ff000041;
         color: red;
         cursor: pointer;
@@ -67,35 +71,18 @@ export const ItemsInDetailsTable = styled.table`
           transform: scale(1.1);
         }
       }
-      &.approve {
-        background: #00800031;
-        color: green;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
-      &.available {
-        background: gray;
-        font-size: 0.8rem;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
-      &.unavailable {
-        background: #0b8e30;
-        font-size: 0.8rem;
-        color: white;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
-    
+    }
+    &.pending-style {
+      color: #da9708e0;
+    }
+    &.processing-style {
+      color: #0436dbdf;
+    }
+    &.delivered-style {
+      color: #187d06df;
+    }
+    &.cancelled-style {
+      color: #bc0303df;
+    }
   }
 `;

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib";
 import { tokenDecoder } from "@/utils";
 
-const getStatistics = async (req, res) => {
+const getDeliveredOrders = async (req, res) => {
   try {
     if (req.method !== "GET") {
       return res.status(405).json({ message: "Something went wrong" });
@@ -17,29 +17,30 @@ const getStatistics = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized user" });
     }
 
-    const userCount = await prisma.user.count();
-    const orderCount = await prisma.order.count();
-    const itemCount = await prisma.FoodItem.count();
-
     const orders = await prisma.Order.findMany({
       where: {
         status: "delivered",
       },
-    });
-    let totalSell = 0;
-    orders.forEach((item) => {
-      totalSell += item.subTotal;
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        User: {
+          select: {
+            name: true,
+            phone: true,
+            email: true,
+            address: true,
+          },
+        },
+      },
     });
 
-    res.status(200).json({
-      users: userCount,
-      orders: orderCount,
-      item: itemCount,
-      totalSell: totalSell,
-    });
+    res.status(200).json(orders);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error });
   }
 };
 
-export default getStatistics;
+export default getDeliveredOrders;

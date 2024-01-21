@@ -22,7 +22,7 @@ const RecentBooksCard = () => {
         });
 
         if (res.ok) {
-          setRecentOrders((await res.json()).books);
+          setRecentOrders(await res.json());
         }
       } catch (error) {
         console.log("Recent book list error", error);
@@ -32,21 +32,23 @@ const RecentBooksCard = () => {
     fetchRecentOrders();
   }, []);
 
+  const visibleOrders = recentOrders.slice(0, 5);
+
   return (
     <LargeCardContainer>
       <h2>Recent Orders</h2>
-      {recentOrders?.map((item, index) => {
-        const { title, createdAt } = item;
+      {visibleOrders?.map((item, index) => {
+        const { createdAt, subTotal } = item;
         return (
           <LargeCardSubContainer key={index}>
             <div className="flex flex-row justify-between">
               <h3 className={`${index == 0 ? "active" : ""}`}>
-                New Book Donated
+                New Order Placed
               </h3>
               <h4>{formatTimeDistance(createdAt)}</h4>
             </div>
             <p>
-              {item.author.name} Donated <span>{title}</span>
+              {item.User.name} Placed order of <span>{subTotal} Tk</span>
             </p>
           </LargeCardSubContainer>
         );
